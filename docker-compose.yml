@@ -1,0 +1,14 @@
+---
+services:
+  tidal-discord-rpc:
+    build: .
+    container_name: tidal-discord-rpc
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - /run/user/1000/discord-ipc-0:/tmp/discord-ipc-0:ro
+    env_file:
+     - .env
+...

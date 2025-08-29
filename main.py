@@ -37,7 +37,7 @@ def main():
                     and precedent_activity["player"]["status"]
                     == current_activity["player"]["status"]
                     and abs(int(current_activity["currentInSeconds"]) - precedent_start)
-                    < 5
+                    < 10
                 )
 
                 if should_update:
@@ -90,6 +90,16 @@ def reconnect_to_discord():
 
 
 def get_tidal_activity() -> dict:
+    """
+    Fetch the current activity from the Tidal API.
+
+    This function makes a GET request to the Tidal API to retrieve the current
+    playing activity. It returns the activity data as a dictionary.
+
+    Returns:
+        dict: A dictionary containing the current Tidal activity data.
+              If an error occurs, an empty dictionary is returned.
+    """
     try:
         r = requests.get(
             f"{os.environ['TIDAL_API_URL']}:{os.environ['TIDAL_API_PORT']}/current",
@@ -103,6 +113,18 @@ def get_tidal_activity() -> dict:
 
 
 def parse_activity(current_activity: dict) -> dict:
+    """
+    Parse the current Tidal activity and prepare it for Discord RPC.
+
+    This function takes the current Tidal activity data and formats it into
+    a dictionary that can be used to update the Discord RPC presence.
+
+    Args:
+        current_activity (dict): A dictionary containing the current Tidal activity data.
+
+    Returns:
+        dict: A dictionary containing the formatted activity data for Discord RPC.
+    """
     current_time = time.time()
     to_send = dict(state=current_activity["artists"])
     to_send["large_image"] = current_activity["image"]
