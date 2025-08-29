@@ -42,6 +42,10 @@ class Payload:
         _rn: bool = True,
         activity_type: int = None,
         status_display_type: int = None,
+        state_url: str = None,
+        details_url: str = None,
+        large_image_url: str = None,
+        small_image_url: str = None,
     ):
         # They should already be an int because we give activity_typehints, but some people are fucking stupid and use
         # IDLE or some other stupid shit.
@@ -56,15 +60,19 @@ class Payload:
         else:
             act_details = {
                 "state": state,
+                "state_url": state_url,
                 "details": details,
+                "details_url": details_url,
                 "type": activity_type,
                 "status_display_type": status_display_type,
                 "timestamps": {"start": start, "end": end},
                 "assets": {
                     "large_image": large_image,
                     "large_text": large_text,
+                    "large_url": large_image_url,
                     "small_image": small_image,
                     "small_text": small_text,
+                    "small_url": small_image_url,
                 },
                 "party": {"id": party_id, "size": party_size},
                 "secrets": {"join": join, "spectate": spectate, "match": match},

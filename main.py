@@ -128,12 +128,9 @@ def parse_activity(current_activity: dict) -> dict:
     current_time = time.time()
     to_send = dict(state=current_activity["artists"])
     to_send["large_image"] = current_activity["image"]
-    to_send["large_text"] = (
-        current_activity["album"]
-        if current_activity["album"]
-        else current_activity["title"]
-    )
+    to_send["large_image_url"] = current_activity["url"]
     to_send["details"] = current_activity["title"]
+    to_send["details_url"] = current_activity["url"]
     to_send["activity_type"] = Activity.LISTENING.value
     to_send["status_display_type"] = StatusDisplay.STATE.value
     to_send["start"] = current_time - current_activity["currentInSeconds"]

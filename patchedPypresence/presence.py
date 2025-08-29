@@ -45,6 +45,10 @@ class Presence(BaseClient):
         payload_override: dict = None,
         activity_type: int = None,
         status_display_type: int = None,
+        state_url: str = None,
+        details_url: str = None,
+        large_image_url: str = None,
+        small_image_url: str = None,
     ):
         if payload_override is None:
             payload = Payload.set_activity(
@@ -112,6 +116,10 @@ class AioPresence(BaseClient):
         instance: bool = True,
         activity_type: int = 1,
         status_display_type: int = 1,
+        state_url: str = None,
+        details_url: str = None,
+        large_image_url: str = None,
+        small_image_url: str = None,
     ):
         payload = Payload.set_activity(
             pid=pid,
