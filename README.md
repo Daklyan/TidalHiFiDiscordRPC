@@ -24,7 +24,7 @@ Install the required Python packages:
 uv pip install -r requirements.txt
 ```
 
-3. Run the application:
+Run the application:
 
 ```bash
 python3 main.py
