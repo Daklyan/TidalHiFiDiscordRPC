@@ -23,6 +23,7 @@ def main():
 
     precedent_activity = {}
     precedent_start = 0
+    wait_time = 10
 
     LOGGER.info("🚀 Discord Tidal RPC launched, waiting for Tidal Activity...")
 
@@ -40,12 +41,15 @@ def main():
                     < 10
                 )
 
+                wait_time = 5
+
                 if should_update:
                     to_send = parse_activity(current_activity=current_activity)
                     LOGGER.info(
                         f"Listening to {current_activity['title']} by {current_activity['artists']}"
                     )
                     RPC.update(**to_send)
+                    wait_time = (time.time() - to_send["end"]) % 6
 
                 precedent_activity = current_activity
                 precedent_start = int(current_activity["currentInSeconds"])
@@ -53,8 +57,9 @@ def main():
                 RPC.clear()
                 precedent_activity = {}
                 precedent_start = 0
+                wait_time = 10
 
-            time.sleep(5 if current_activity else 10)
+            time.sleep(wait_time)
         except (PyPresenceException, SocketError) as discord_error:
             LOGGER.error(f"❌ Error on discord connection: {discord_error}")
             reconnect_to_discord()
