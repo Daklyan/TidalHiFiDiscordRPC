@@ -9,6 +9,8 @@ services:
       - TZ=Europe/Paris
     volumes:
       - /run/user/1000/discord-ipc-0:/tmp/discord-ipc-0:ro
+      # For Windows? IDK if it works
+      # - \.\pipe\discord-ipc-0:\.\pipe\discord-ipc-0 
     env_file:
      - .env
 ...

@@ -41,16 +41,20 @@ def main():
                     < 10
                 )
 
-                wait_time = 5
-
                 if should_update:
                     to_send = parse_activity(current_activity=current_activity)
                     LOGGER.info(
                         f"Listening to {current_activity['title']} by {current_activity['artists']}"
                     )
                     RPC.update(**to_send)
-                    wait_time = (time.time() - to_send["end"]) % 6
 
+                wait_time = (
+                    time.time()
+                    - (
+                        current_activity["durationInSeconds"]
+                        - current_activity["currentInSeconds"]
+                    )
+                ) % 6
                 precedent_activity = current_activity
                 precedent_start = int(current_activity["currentInSeconds"])
             else:
@@ -74,6 +78,7 @@ def reconnect_to_discord():
     while True:
         try:
             RPC.connect()
+            RPC.clear()
             break
         except PyPresenceException as reconnect_error:
             LOGGER.error(f"❌ Failed to reconnect to Discord: {reconnect_error}")

@@ -127,12 +127,16 @@ class Client(BaseClient):
                      party_id: str = None, party_size: list = None,
                      join: str = None, spectate: str = None,
                      match: str = None, buttons: list = None,
-                     instance: bool = True, activity_type: int = None):
+                     instance: bool = True, activity_type: int = None, 
+                     state_url: str = None, details_url: str = None, 
+                     large_image_url: str = None, small_image_url: str = None):
         payload = Payload.set_activity(pid=pid, state=state, details=details, start=start, end=end,
                                        large_image=large_image, large_text=large_text, small_image=small_image,
                                        small_text=small_text, party_id=party_id, party_size=party_size, join=join,
                                        spectate=spectate, match=match, buttons=buttons, instance=instance,
-                                       activity=True, activity_type=activity_type)
+                                       activity=True, activity_type=activity_type, state_url=state_url,
+                                       details_url=details_url, large_image_url=large_image_url, small_image_url=small_image_url
+                                    )
         
         self.send_data(1, payload)
         return self.loop.run_until_complete(self.read_output())
@@ -311,10 +315,13 @@ class AioClient(BaseClient):
                            party_id: str = None, party_size: list = None,
                            join: str = None, spectate: str = None,
                            buttons: list = None,
-                           match: str = None, instance: bool = True, activity_type: int = None):
+                           match: str = None, instance: bool = True, activity_type: int = None,
+                           state_url: str = None, details_url: str = None, 
+                           large_image_url: str = None, small_image_url: str = None):
         payload = Payload.set_activity(pid, state, details, start, end, large_image, large_text,
                                        small_image, small_text, party_id, party_size, join, spectate,
-                                       match, buttons, instance, activity=True, activity_type=activity_type)
+                                       match, buttons, instance, state_url, details_url, large_image_url, small_image_url,
+                                       activity=True, activity_type=activity_type)
         self.send_data(1, payload)
         return await self.read_output()
 

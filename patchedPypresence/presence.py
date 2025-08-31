@@ -71,6 +71,10 @@ class Presence(BaseClient):
                 activity=True,
                 activity_type=activity_type,
                 status_display_type=status_display_type,
+                state_url=state_url,
+                details_url=details_url,
+                large_image_url=large_image_url,
+                small_image_url=small_image_url,
             )
         else:
             payload = payload_override
@@ -141,6 +145,10 @@ class AioPresence(BaseClient):
             activity=True,
             activity_type=activity_type,
             status_display_type=status_display_type,
+            state_url=state_url,
+            details_url=details_url,
+            large_image_url=large_image_url,
+            small_image_url=small_image_url,
         )
         self.send_data(1, payload)
         return await self.read_output()
